@@ -34,6 +34,61 @@ Canv.prototype.blitTo = function(canv)
   //drawImage(source, sourcex, sourcey, sourcew, sourceh, destx, desty, destw, desth);
   canv.context.drawImage(self.canvas, 0, 0, self.canvas.width, self.canvas.height, 0, 0, canv.canvas.width, canv.canvas.height);
 };
+Canv.prototype.drawLine = function(ax,ay,bx,by)
+{
+  var self = this;
+  var ca = self.canvas;
+  var cx = self.context;
+
+  cx.beginPath();
+  cx.moveTo(ax,ay);
+  cx.lineTo(bx,by);
+  cx.stroke();
+}
+Canv.prototype.drawGrid = function(center_x, center_y, unit_x, unit_y)
+{
+  var self = this;
+  var ca = self.canvas;
+  var cx = self.context;
+
+  var t;
+  var x;
+  var y;
+
+  t = center_x;
+  x = lerp(0,ca.width,t);
+  while(t < 1)
+  {
+    self.drawLine(x,0,x,ca.height);
+    x += unit_x;
+    t = invlerp(0,ca.width,x);
+  }
+  t = center_x;
+  x = lerp(0,ca.width,t);
+  while(t > 0)
+  {
+    self.drawLine(x,0,x,ca.height);
+    x -= unit_x;
+    t = invlerp(0,ca.width,x);
+  }
+
+  t = center_y;
+  y = lerp(0,ca.height,t);
+  while(t < 1)
+  {
+    self.drawLine(0,y,ca.width,y);
+    y += unit_y;
+    t = invlerp(0,ca.height,y);
+  }
+  t = center_y;
+  y = lerp(0,ca.height,t);
+  while(t > 0)
+  {
+    self.drawLine(0,y,ca.width,y);
+    y -= unit_y;
+    t = invlerp(0,ca.height,y);
+  }
+}
 
 //sets offsetX/offsetY into the object listening for the event
 function enableOffset(evt)
@@ -59,14 +114,66 @@ function enableOffset(evt)
   }
 }
 
-//rect = {x:input.x,y:input.y,w:input.w,h:input.h};
-//pass in output rect because object creation/cleanup expensive!
-//input CAN be output if you don't care about input being mutated
-function rectMap(oldr, newr, inputr, outputr)
+function lerp(s,e,t)
 {
-  outputr.x = (inputr.x/oldr.w)*newr.w;
-  outputr.y = (inputr.y/oldr.h)*newr.h;
-  outputr.w = (inputr.w/oldr.w)*newr.w;
-  outputr.h = (inputr.h/oldr.h)*newr.h;
+  return s+((e-s)*t);
+}
+
+function invlerp(s,e,v)
+{
+  return (v-s)/(e-s);
+}
+
+function mapPt(from,to,pt)
+{
+  pt.x = ((pt.x-from.x)/from.w)*to.w+to.x;
+  pt.y = ((pt.y-from.y)/from.h)*to.h+to.y;
+  return pt;
+}
+function mapRect(from,to,rect)
+{
+  rect.x = ((rect.x-from.x)/from.w)*to.w+to.x;
+  rect.y = ((rect.y-from.y)/from.h)*to.h+to.y;
+  rect.w = (rect.w/from.w)*to.w;
+  rect.h = (rect.h/from.h)*to.h;
+  return rect;
+}
+
+function NumberBox(val,callback)
+{
+  var self = this;
+  var el = document.createElement("input");
+  el.type = "text";
+  el.number = val;
+  el.value = val;
+  var processInput = function(n)
+  {
+    if(!isNaN(parseFloat(n)) && isFinite(n))
+    {
+      el.number = parseFloat(n);
+      callback(el.number);
+    }
+  }
+  el.addEventListener("keyup",
+    function(evt)
+    {
+      processInput(el.value);
+      if(evt.keyCode == 13) el.blur();
+    },
+    false
+  );
+  el.addEventListener("blur",
+    function(evt)
+    {
+      el.value = el.number;
+    },
+    false
+  );
+  el.set = function(n)
+  {
+    processInput(n);
+    el.value = el.number;
+  }
+  return el;
 }
 
