@@ -1,4 +1,7 @@
-build:
+make: build
+	
+build: run
 	
 run:
-	open index.html
+	open ./index.html
+

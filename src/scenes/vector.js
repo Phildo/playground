@@ -29,9 +29,9 @@ var VectorPlayground = function()
   ca.style.border = "1px solid black";
   self.playground.appendChild(c.canvas)
 
-  var x_box = new NumberBox(0,function(n){ self.vector.x = n; self.draw();});
+  var x_box = GenNumberBox(0,function(n){ self.vector.x = n; self.draw();});
   x_box.style.width = "30px";
-  var y_box = new NumberBox(0,function(n){ self.vector.y = n; self.draw();});
+  var y_box = GenNumberBox(0,function(n){ self.vector.y = n; self.draw();});
   y_box.style.width = "30px";
 
   self.playground.appendChild(x_box);
