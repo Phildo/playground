@@ -52,48 +52,48 @@ Canv.prototype.drawLine = function(ax,ay,bx,by)
   cx.lineTo(bx,by);
   cx.stroke();
 }
-Canv.prototype.drawGrid = function(center_x, center_y, unit_x, unit_y)
+Canv.prototype.drawGrid = function(x,y,w,h, center_x, center_y, unit_x, unit_y)
 {
   var self = this;
   var ca = self.canvas;
   var cx = self.context;
 
   var t;
-  var x;
-  var y;
+  var tx;
+  var ty;
 
   t = center_x;
-  x = lerp(0,ca.width,t);
-  while(t < 1)
+  tx = lerp(x,x+w,t);
+  while(t <= 1)
   {
-    self.drawLine(x,0,x,ca.height);
-    x += unit_x;
-    t = invlerp(0,ca.width,x);
+    self.drawLine(tx,y,tx,y+h);
+    tx += unit_x;
+    t = invlerp(x,x+w,tx);
   }
   t = center_x;
-  x = lerp(0,ca.width,t);
-  while(t > 0)
+  tx = lerp(x,x+w,t);
+  while(t >= 0)
   {
-    self.drawLine(x,0,x,ca.height);
-    x -= unit_x;
-    t = invlerp(0,ca.width,x);
+    self.drawLine(tx,y,tx,y+h);
+    tx -= unit_x;
+    t = invlerp(x,x+w,tx);
   }
 
   t = center_y;
-  y = lerp(0,ca.height,t);
-  while(t < 1)
+  ty = lerp(y,y+h,t);
+  while(t <= 1)
   {
-    self.drawLine(0,y,ca.width,y);
-    y += unit_y;
-    t = invlerp(0,ca.height,y);
+    self.drawLine(x,ty,x+w,ty);
+    ty += unit_y;
+    t = invlerp(y,y+h,ty);
   }
   t = center_y;
-  y = lerp(0,ca.height,t);
-  while(t > 0)
+  ty = lerp(y,y+h,t);
+  while(t >= 0)
   {
-    self.drawLine(0,y,ca.width,y);
-    y -= unit_y;
-    t = invlerp(0,ca.height,y);
+    self.drawLine(x,ty,x+w,ty);
+    ty -= unit_y;
+    t = invlerp(y,y+h,ty);
   }
 }
 
