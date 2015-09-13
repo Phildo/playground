@@ -72,7 +72,6 @@ function NumberBox(x,y,w,h,val,delta,callback)
   {
     self.focused = true;
     self.down = true;
-    console.log(self.x);
 
     self.offX = evt.doX-self.x;
     self.offY = evt.doY-self.y;
@@ -87,7 +86,6 @@ function NumberBox(x,y,w,h,val,delta,callback)
     self.value = ""+self.number;
 
     self.down = ptWithinObj(evt.doX, evt.doY, self);
-    console.log(self.x);
     callback(self.number);
   }
   self.dragFinish = function()
