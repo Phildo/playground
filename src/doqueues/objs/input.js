@@ -136,3 +136,53 @@ function NumberBox(x,y,w,h,val,delta,callback)
   }
 }
 
+function ToggleBox(x,y,w,h,val,callback)
+{
+  var self = this;
+  self.x = x;
+  self.y = y;
+  self.w = w;
+  self.h = h;
+
+  self.on = val;
+  self.down = false;
+
+  self.press = function(evt)
+  {
+    self.down = true;
+  }
+  self.unpress = function(evt)
+  {
+    self.down = false;
+    if(ptWithinObj(evt.doX, evt.doY, self)) self.toggle();
+  }
+
+  self.toggle = function()
+  {
+    self.on = !self.on;
+    callback(self.on);
+  }
+  self.set = function(n)
+  {
+    self.on = n;
+    callback(self.on);
+  }
+
+  self.draw = function(canv)
+  {
+    if(self.down) canv.context.strokeStyle = "#00F400";
+    else          canv.context.strokeStyle = "#000000";
+
+    if(self.on) canv.context.fillStyle = "#00F400";
+    else        canv.context.fillStyle = "#FFFFFF";
+
+    canv.context.fillRect(self.x,self.y,self.w,self.h);
+    canv.context.strokeRect(self.x,self.y,self.w,self.h);
+  }
+
+  self.print = function()
+  {
+    console.log("("+self.x+","+self.y+","+self.w+","+self.h+") o:"+self.on+" d:"+self.down+" "+"");
+  }
+}
+
