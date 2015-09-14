@@ -36,12 +36,26 @@ var BarycentricScene = function(space, stage)
     p.x = ( ((b.y-c.y)*(v.x-c.x)) + ((c.x-b.x)*(v.y-c.y)) ) / ( ((b.y-c.y)*(a.x-c.x)) + ((c.x-b.x)*(a.y-c.y)) );
     p.y = ( ((c.y-a.y)*(v.x-c.x)) + ((a.x-c.x)*(v.y-c.y)) ) / ( ((b.y-c.y)*(a.x-c.x)) + ((c.x-b.x)*(a.y-c.y)) );
     p.z = 1-p.y-p.x;
+
+    self.handle.x = v.x;
+    self.handle.y = v.y;
+    mapPt(world,screen,self.handle);
+    self.handle.x -= self.handle.w/2;
+    self.handle.y -= self.handle.h/2;
+
     mapToInputs();
   }
   function propagatep()
   {
     v.x = a.x*p.x + b.x*p.y + c.x*p.z;
     v.y = a.y*p.x + b.y*p.y + c.y*p.z;
+
+    self.handle.x = v.x;
+    self.handle.y = v.y;
+    mapPt(world,screen,self.handle);
+    self.handle.x -= self.handle.w/2;
+    self.handle.y -= self.handle.h/2;
+
     mapToInputs();
   }
   function mapToInputs()
@@ -170,6 +184,21 @@ var BarycentricScene = function(space, stage)
   var ss_v = mapPt(world,screen,new fv3(0,0));
   var ss_o = mapPt(world,screen,new fv3(0,0));
 
+  self.handle = new Draggable({x:1,y:1,w:10,h:10});
+  mapPt(screen,world,self.handle);
+  var tmp = self.handle.drag;
+  self.handle.drag = function(evt)
+  {
+    tmp(evt);
+    var vec = new fv3(self.handle.x+(self.handle.w/2), self.handle.y+(self.handle.h/2), 0);
+    mapPt(screen,world,vec);
+    self.v.x = vec.x;
+    self.v.y = vec.y;
+    self.v.z = vec.z;
+    propagatev();
+  }
+  dragger.register(self.handle);
+
   propagatev();
   cart_t_select(true);
 
@@ -232,6 +261,8 @@ var BarycentricScene = function(space, stage)
       self.in_vec_def_c_x.draw(cc);
       self.in_vec_def_c_y.draw(cc);
     }
+
+    self.handle.draw(cc);
 
   };
 
