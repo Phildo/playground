@@ -58,18 +58,22 @@ function invlerp(s,e,v)
   return (v-s)/(e-s);
 }
 
-function mapPt(from,to,pt)
+function mapRange(from_min,from_max,to_min,to_max,from_v)
 {
-  pt.x = ((pt.x-from.x)/from.w)*to.w+to.x;
-  pt.y = ((pt.y-from.y)/from.h)*to.h+to.y;
+  return lerp(to_min,to_max,invlerp(from_min,from_max,from_v));
+}
+function mapPt(from_rect,to_rect,pt)
+{
+  pt.x = ((pt.x-from_rect.x)/from_rect.w)*to_rect.w+to_rect.x;
+  pt.y = ((pt.y-from_rect.y)/from_rect.h)*to_rect.h+to_rect.y;
   return pt;
 }
-function mapRect(from,to,rect)
+function mapRect(from_rect,to_rect,rect)
 {
-  rect.x = ((rect.x-from.x)/from.w)*to.w+to.x;
-  rect.y = ((rect.y-from.y)/from.h)*to.h+to.y;
-  rect.w = (rect.w/from.w)*to.w;
-  rect.h = (rect.h/from.h)*to.h;
+  rect.x = ((rect.x-from_rect.x)/from_rect.w)*to_rect.w+to_rect.x;
+  rect.y = ((rect.y-from_rect.y)/from_rect.h)*to_rect.h+to_rect.y;
+  rect.w = (rect.w/from_rect.w)*to_rect.w;
+  rect.h = (rect.h/from_rect.h)*to_rect.h;
   return rect;
 }
 
