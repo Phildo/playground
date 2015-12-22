@@ -28,12 +28,14 @@
 <script type="text/javascript" src="src/scenes/barycentricScene.js"></script>
 <script type="text/javascript" src="src/scenes/dotScene.js"></script>
 <script type="text/javascript" src="src/scenes/graphScene.js"></script>
+<script type="text/javascript" src="src/scenes/waveScene.js"></script>
 
 <script type="text/javascript">
 var vector;
 var bary;
 var dot;
 var graph;
+var wave;
 function begin()
 {
   vector = new Space({width:200,height:100,container:"vector_stage_container",scene:VectorScene});
@@ -44,6 +46,8 @@ function begin()
   dot.begin();
   graph = new Space({width:200,height:100,container:"graph_stage_container",scene:GraphScene});
   graph.begin();
+  wave = new Space({width:200,height:100,container:"wave_stage_container",scene:WaveScene});
+  wave.begin();
 }
 window.addEventListener('touchstart', function(e){ e.preventDefault() }); //prevent browser from doing anything funny
 window.addEventListener("load",begin,false);
@@ -57,6 +61,7 @@ window.addEventListener("load",begin,false);
   <div id="bary_stage_container" style="width:400px; height:200px; position:relative; user-select:none; margin:10px; float:left;"> </div>
   <div id="dot_stage_container" style="width:200px; height:100px; position:relative; user-select:none; margin:10px; float:left;"> </div>
   <div id="graph_stage_container" style="width:200px; height:100px; position:relative; user-select:none; margin:10px; float:left;"> </div>
+  <div id="wave_stage_container" style="width:200px; height:100px; position:relative; user-select:none; margin:10px; float:left;"> </div>
 </div>
 
 </body>

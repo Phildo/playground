@@ -32,8 +32,9 @@ var GraphScene = function(space, stage)
     c.drawGraph(0,0,100,100,0.5,0.5,grid_x_w,grid_y_h,
       function(x){
         //return x;
-        //return Math.cos(x);
-        return Math.pow(x/5,2);
+        return Math.pow(Math.cos(x/3),5)*3;
+        //return Math.pow(x/5,2);
+        //return 1-Math.pow(x/5,2);
       }
     );
   };
