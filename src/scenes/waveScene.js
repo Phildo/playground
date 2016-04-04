@@ -17,16 +17,30 @@ var WaveScene = function(space, stage)
     for(var i = 0; i < n_samples; i++)
     {
       pos[i] = Math.sin(i/10)*10;
-      vel[i] = 0;
+      //vel[i] = 0;
+      vel[i] = Math.sin((i+22)/10);
     }
   };
 
   self.tick = function()
   {
+    //propagate
     for(var i = 0; i < n_samples; i++)
       vel[i] += (pos[(i-1+n_samples)%n_samples]+pos[(i+1)%n_samples])/2 - pos[i];
     for(var i = 0; i < n_samples; i++)
       pos[i] += vel[i];
+
+    //dampen
+    for(var i = 0; i < n_samples; i++)
+      vel[i] *= 0.999;
+
+    //relevel
+    var ave = 0;
+    for(var i = 0; i < n_samples; i++)
+      ave += pos[i];
+    ave /= n_samples;
+    for(var i = 0; i < n_samples; i++)
+      pos[i] -= ave;
   };
 
   self.draw = function()

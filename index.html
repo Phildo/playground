@@ -27,6 +27,7 @@
 <script type="text/javascript" src="src/scenes/vectorScene.js"></script>
 <script type="text/javascript" src="src/scenes/barycentricScene.js"></script>
 <script type="text/javascript" src="src/scenes/dotScene.js"></script>
+<script type="text/javascript" src="src/scenes/atan2Scene.js"></script>
 <script type="text/javascript" src="src/scenes/graphScene.js"></script>
 <script type="text/javascript" src="src/scenes/waveScene.js"></script>
 
@@ -34,6 +35,7 @@
 var vector;
 var bary;
 var dot;
+var atan;
 var graph;
 var wave;
 function begin()
@@ -44,6 +46,8 @@ function begin()
   bary.begin();
   dot = new Space({width:200,height:100,container:"dot_stage_container",scene:DotScene});
   dot.begin();
+  atan = new Space({width:200,height:100,container:"atan2_stage_container",scene:Atan2Scene});
+  atan.begin();
   graph = new Space({width:200,height:100,container:"graph_stage_container",scene:GraphScene});
   graph.begin();
   wave = new Space({width:200,height:100,container:"wave_stage_container",scene:WaveScene});
@@ -60,6 +64,7 @@ window.addEventListener("load",begin,false);
   <div id="vector_stage_container" style="width:200px; height:100px; position:relative; user-select:none; margin:10px; float:left;"> </div>
   <div id="bary_stage_container" style="width:400px; height:200px; position:relative; user-select:none; margin:10px; float:left;"> </div>
   <div id="dot_stage_container" style="width:200px; height:100px; position:relative; user-select:none; margin:10px; float:left;"> </div>
+  <div id="atan2_stage_container" style="width:200px; height:100px; position:relative; user-select:none; margin:10px; float:left;"> </div>
   <div id="graph_stage_container" style="width:200px; height:100px; position:relative; user-select:none; margin:10px; float:left;"> </div>
   <div id="wave_stage_container" style="width:200px; height:100px; position:relative; user-select:none; margin:10px; float:left;"> </div>
 </div>
